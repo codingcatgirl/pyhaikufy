@@ -4,14 +4,22 @@ import typing
 import pyphen
 
 
+overrides_de = {
+    'einen': 'ei-nen',
+    'naiv': 'na-iv',
+    'tweets': 'tweets',
+}
+
+
 class Haikufy:
     def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-',
-                 forbidden_oneletter_syllables='bcdfghjjklmnpqstvwxyz'):
+                 forbidden_oneletter_syllables='bcdfghjjklmnpqstvwxyz', overrides=overrides_de):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
         self.letters = letters
         self.ignore_chars = ignore_chars
         self.split_chars = split_chars
         self.forbidden_oneletter_syllables = forbidden_oneletter_syllables
+        self.overrides = overrides
 
     def haikufy(self, text: str) -> typing.Optional[str]:
         words, syllables = zip(*((word, self.count_syllables(word)) for word in text.split()))
@@ -66,7 +74,8 @@ class Haikufy:
                 return None
 
         return sum((max(
-            len(tuple(s for s in self.dic.inserted(w).split('-') if self._allowed_syllable(s))), 1)
+            len(tuple(s for s in self.overrides.get(w.lower(), self.dic.inserted(w)).split('-')
+                      if self._allowed_syllable(s))), 1)
             for w in subwords
         ), 0)
 
