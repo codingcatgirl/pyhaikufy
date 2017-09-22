@@ -143,7 +143,7 @@ else:
     twitter_api = tweepy.API(auth)
 
 tweet_dispatcher = TweetDispatcher(twitter_api)
-thread = Thread(target=tweet_dispatcher.run)
+thread = Thread(target=tweet_dispatcher.run, daemon=True)
 thread.start()
 
 thread = Thread(target=start_stream, args=(auth, tweet_dispatcher, auth_data['screen_name']))
