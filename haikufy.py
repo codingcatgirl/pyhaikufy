@@ -13,7 +13,7 @@ overrides_de = {
 
 class Haikufy:
     def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-',
-                 forbidden_oneletter_syllables='bcdfghjjklmnpqstvwxyz', overrides=overrides_de):
+                 forbidden_oneletter_syllables='bcdfghjjklmnpqrstvwxyz', overrides=overrides_de):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
         self.letters = letters
         self.ignore_chars = ignore_chars
