@@ -51,6 +51,12 @@ class StreamListener(tweepy.StreamListener):
         print('[StreamListener] incoming tweet from %s (@%s):' % (user_name, screen_name))
         print('[StreamListener] '+repr(text))
 
+        leading_mentions = ['@'+screen_name]
+        text = text.split()
+        while text and text[0].startswith('@'):
+            leading_mentions.append(text.pop(0))
+        text = ' '.join(text)
+
         try:
             haiku = self.haikufy.haikufy(text)
         except:
@@ -63,7 +69,7 @@ class StreamListener(tweepy.StreamListener):
             return
 
         print('[StreamListener] This is a haiku, queue reply!')
-        self.dispatcher.tweet(text='@'+screen_name+'\n'+haiku, in_reply_to=status_id)
+        self.dispatcher.tweet(text=' '.join(leading_mentions)+'\n'+haiku, in_reply_to=status_id)
 
 
 class TweetDispatcher:
