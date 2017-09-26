@@ -11,6 +11,8 @@ overrides_de = {
     'mention': 'men-tion',
     'mentions': 'men-tions',
 }
+for c in string.ascii_lowercase:
+    overrides_de[c] = 'yp-si-lon' if c == 'y' else c
 
 
 def german_number_syllables(number):
@@ -100,7 +102,7 @@ class Haikufy:
 
         subwords = word.split()
         for subword in subwords:
-            if len(subword) == 1:
+            if len(subword) == 1 and subword not in self.overrides:
                 return None
 
         return sum((max(
