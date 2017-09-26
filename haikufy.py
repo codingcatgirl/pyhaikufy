@@ -42,7 +42,7 @@ def german_number_syllables(number):
 
 
 class Haikufy:
-    def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-',
+    def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-/',
                  forbidden_oneletter_syllables='bcdfghjjklmnpqrstvwxyz', overrides=overrides_de,
                  number_syllables=german_number_syllables):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
