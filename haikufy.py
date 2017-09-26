@@ -8,6 +8,7 @@ overrides_de = {
     'einen': 'ei-nen',
     'naiv': 'na-iv',
     'tweets': 'tweets',
+    'mention': 'men-tion',
 }
 
 
