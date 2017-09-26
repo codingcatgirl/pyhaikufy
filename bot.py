@@ -55,6 +55,8 @@ class StreamListener(tweepy.StreamListener):
         text = text.split()
         while text and text[0].startswith('@'):
             leading_mentions.append(text.pop(0))
+        while text and (text[-1].startswith('http://') or text[-1].startswith('https://')):
+            text.pop()
         text = ' '.join(text)
 
         try:
