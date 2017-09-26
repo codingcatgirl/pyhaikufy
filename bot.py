@@ -34,7 +34,11 @@ class StreamListener(tweepy.StreamListener):
             user_name = data.get('source', {}).get('name', '')
             screen_name = data.get('source', {}).get('screen_name', '')
             print('[StreamListener] we were followed by %s (@%s), refollow!' % (user_name, screen_name))
-            self.dispatcher.api.create_friendship(user_id=user_id)
+            try:
+                self.dispatcher.api.create_friendship(user_id=user_id)
+            except:
+                print('[StreamListener] failed!')
+                traceback.print_exc()
             return
 
         if 'in_reply_to_status_id' not in data or 'retweeted_status' in data:
