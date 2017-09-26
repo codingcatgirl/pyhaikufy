@@ -13,15 +13,43 @@ overrides_de = {
 }
 
 
+def german_number_syllables(number):
+    if number < 10:
+        return 2 if number == 7 else 1
+    if number < 100:
+        if number < 13:
+            return 1
+        result = 0
+        if number % 10:
+            result += german_number_syllables(number % 10)
+            if number > 20:
+                result += 1
+        result += 1 if number//10 == 1 else 2
+        return result
+    if number < 1000:
+        result = german_number_syllables(number // 100) + 2
+        if number % 100:
+            result += german_number_syllables(number % 100)
+        return result
+    if number < 1000000:
+        result = german_number_syllables(number // 1000) + 2
+        if number % 1000:
+            result += german_number_syllables(number % 1000)
+        return result
+    return None
+
+
 class Haikufy:
     def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-',
-                 forbidden_oneletter_syllables='bcdfghjjklmnpqrstvwxyz', overrides=overrides_de):
+                 forbidden_oneletter_syllables='bcdfghjjklmnpqrstvwxyz', overrides=overrides_de,
+                 number_syllables=german_number_syllables):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
         self.letters = letters
         self.ignore_chars = ignore_chars
         self.split_chars = split_chars
         self.forbidden_oneletter_syllables = forbidden_oneletter_syllables
         self.overrides = overrides
+        self.number_syllables = number_syllables
 
     def haikufy(self, text: str) -> typing.Optional[str]:
         words, syllables = zip(*((word, self.count_syllables(word)) for word in text.split()))
@@ -48,8 +76,8 @@ class Haikufy:
         return len(s) > 1 or s not in self.forbidden_oneletter_syllables
 
     def count_syllables(self, word: str) -> typing.Optional[int]:
-        if word.isdigit():
-            return None
+        if word.isdigit() and self.number_syllables is not None:
+            return self.number_syllables(int(word))
 
         while word and word[0] not in self.letters+string.digits:
             word = word[1:]
