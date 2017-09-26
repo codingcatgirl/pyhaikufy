@@ -78,9 +78,6 @@ class Haikufy:
         return len(s) > 1 or s not in self.forbidden_oneletter_syllables
 
     def count_syllables(self, word: str) -> typing.Optional[int]:
-        if word.isdigit() and self.number_syllables is not None:
-            return self.number_syllables(int(word))
-
         while word and word[0] not in self.letters+string.digits:
             word = word[1:]
         while word and word[-1] not in self.letters+string.digits:
@@ -88,8 +85,8 @@ class Haikufy:
         if not word:
             return 0
 
-        if word.isdigit():
-            return None
+        if word.isdigit() and self.number_syllables is not None:
+            return self.number_syllables(int(word))
 
         for char in self.split_chars:
             word = word.replace(char, ' ')
