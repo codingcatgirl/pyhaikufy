@@ -152,8 +152,5 @@ tweet_dispatcher = TweetDispatcher(twitter_api)
 thread = Thread(target=tweet_dispatcher.run, daemon=True)
 thread.start()
 
-thread = Thread(target=start_stream, daemon=True, args=(auth, tweet_dispatcher, auth_data['screen_name']))
+thread = Thread(target=start_stream, args=(auth, tweet_dispatcher, auth_data['screen_name']))
 thread.start()
-
-while True:
-    time.sleep(60)
