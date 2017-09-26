@@ -9,6 +9,7 @@ overrides_de = {
     'naiv': 'na-iv',
     'tweets': 'tweets',
     'mention': 'men-tion',
+    'mentions': 'men-tions',
 }
 
 
