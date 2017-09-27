@@ -54,6 +54,8 @@ class Haikufy:
         self.number_syllables = number_syllables
 
     def haikufy(self, text: str) -> typing.Optional[str]:
+        if not text:
+            return None
         words, syllables = zip(*((word, self.count_syllables(word)) for word in text.split()))
         print(words, syllables)
         if None in syllables or sum(syllables) != 17:
