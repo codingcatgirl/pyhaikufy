@@ -16,6 +16,8 @@ overrides_de = {
 for c in string.ascii_lowercase:
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
 
+john_syllables_de = ('ti-on', )
+
 
 def german_number_syllables(number):
     if number < 10:
@@ -46,7 +48,7 @@ def german_number_syllables(number):
 class Haikufy:
     def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-/',
                  forbidden_oneletter_syllables='bcdfghjjklmnpqrstvwxyz', overrides=overrides_de,
-                 number_syllables=german_number_syllables):
+                 number_syllables=german_number_syllables, join_syllables=john_syllables_de):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
         self.letters = letters
         self.ignore_chars = ignore_chars
@@ -54,6 +56,7 @@ class Haikufy:
         self.forbidden_oneletter_syllables = forbidden_oneletter_syllables
         self.overrides = overrides
         self.number_syllables = number_syllables
+        self.join_syllables = join_syllables
 
     def haikufy(self, text: str) -> typing.Optional[str]:
         if not text:
@@ -106,11 +109,17 @@ class Haikufy:
             if len(subword) == 1 and subword not in self.overrides:
                 return None
 
-        return sum((max(
-            len(tuple(s for s in self.overrides.get(w.lower(), self.dic.inserted(w)).split('-')
-                      if self._allowed_syllable(s))), 1)
-            for w in subwords
-        ), 0)
+        return sum((self._count_subword_syllables(w) for w in subwords), 0)
+
+    def _count_subword_syllables(self, w):
+        inserted = self.overrides.get(w.lower())
+        if inserted is not None:
+            return len(inserted.split('-'))
+
+        inserted = '-'+self.dic.inserted(w)+'-'
+        for join_syllables in self.join_syllables:
+            inserted = inserted.replace('-'+join_syllables+'-', '-'+join_syllables.replace('-', '')+'-')
+        return max(len(tuple(s for s in inserted.split('-') if self._allowed_syllable(s))), 1)
 
 
 if __name__ == '__main__':
