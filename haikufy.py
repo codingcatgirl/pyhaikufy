@@ -7,16 +7,14 @@ import pyphen
 overrides_de = {
     'einen': 'ei-nen',
     'naiv': 'na-iv',
-    'tweets': 'tweets',
-    'mention': 'men-tion',
-    'mentions': 'men-tions',
     'video': 'vi-de-o',
     'videos': 'vi-de-os',
+    'idee': 'i-dee',
 }
 for c in string.ascii_lowercase:
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
 
-john_syllables_de = ('ti-on', )
+join_syllables_de = ('ti-on', 'ti-ons')
 
 
 def german_number_syllables(number):
@@ -48,7 +46,7 @@ def german_number_syllables(number):
 class Haikufy:
     def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-/',
                  forbidden_oneletter_syllables='bcdfghjjklmnpqrstvwxyz', overrides=overrides_de,
-                 number_syllables=german_number_syllables, join_syllables=john_syllables_de):
+                 number_syllables=german_number_syllables, join_syllables=join_syllables_de):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
         self.letters = letters
         self.ignore_chars = ignore_chars
