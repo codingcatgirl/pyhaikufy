@@ -10,6 +10,8 @@ overrides_de = {
     'tweets': 'tweets',
     'mention': 'men-tion',
     'mentions': 'men-tions',
+    'video': 'vi-de-o',
+    'videos': 'vi-de-os',
 }
 for c in string.ascii_lowercase:
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
