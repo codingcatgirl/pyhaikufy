@@ -105,7 +105,6 @@ class Haikufy:
 
         subwords = word.split()
         for subword in subwords:
-            print(self.overrides)
             if len(subword) == 1 and subword.lower() not in self.overrides:
                 return None
 
