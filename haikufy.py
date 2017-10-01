@@ -105,7 +105,8 @@ class Haikufy:
 
         subwords = word.split()
         for subword in subwords:
-            if len(subword) == 1 and subword not in self.overrides:
+            print(self.overrides)
+            if len(subword) == 1 and subword.lower() not in self.overrides:
                 return None
 
         return sum((self._count_subword_syllables(w) for w in subwords), 0)
