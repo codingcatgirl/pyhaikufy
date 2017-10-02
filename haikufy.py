@@ -15,7 +15,7 @@ overrides_de = {
 for c in string.ascii_lowercase:
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
 
-join_syllables_de = ('ti-on', 'ti-ons')
+join_syllables_de = ('ti-on', 'ti-ons', 'p-fo')
 
 
 def german_number_syllables(number):
