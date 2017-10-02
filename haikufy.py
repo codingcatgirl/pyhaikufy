@@ -15,7 +15,7 @@ overrides_de = {
 for c in string.ascii_lowercase:
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
 
-join_syllables_de = ('ti-on', 'ti-ons', 'p-fo')
+join_syllables_de = ('ti-on', 'ti-ons')
 
 
 def german_number_syllables(number):
@@ -81,7 +81,7 @@ class Haikufy:
         return '\n'.join(lines)
 
     def _allowed_syllable(self, s):
-        return len(s) > 1 or s not in self.forbidden_oneletter_syllables
+        return len(s) > 1 or s.lower() not in self.forbidden_oneletter_syllables
 
     def count_syllables(self, word: str) -> typing.Optional[int]:
         while word and word[0] not in self.letters+string.digits:
