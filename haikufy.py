@@ -12,6 +12,7 @@ overrides_de = {
     'idee': 'i-dee',
     'warum': 'wa-rum',
     'über': 'ü-ber',
+    'foodporn': 'food-porn',
 }
 for c in string.ascii_lowercase:
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
