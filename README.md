@@ -8,6 +8,9 @@ python3 haikufy.py
 ```
 
 ## how to run the twitter bot
+
+The official german instance can be found at [@ungeplant575](https://twitter.com/ungeplant575).
+
 ```
 pip3 install -r requirements.txt
 python3 bot.py
