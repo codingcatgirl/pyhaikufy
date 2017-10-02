@@ -44,7 +44,7 @@ class StreamListener(tweepy.StreamListener):
         if 'in_reply_to_status_id' not in data or 'retweeted_status' in data:
             return
 
-        text = data.get('text', '')
+        text = data.get('extended_tweet', {}).get('full_text', data.get('text', ''))
         user_name = data.get('user', {}).get('name', '')
         screen_name = data.get('user', {}).get('screen_name', '')
         status_id = data.get('id_str', None)
