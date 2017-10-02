@@ -61,7 +61,8 @@ class StreamListener(tweepy.StreamListener):
             leading_mentions.append(text.pop(0))
         while text and (text[-1].startswith('http://') or text[-1].startswith('https://')):
             text.pop()
-        text = [w for w in text if w.lower() not in ('xd', 'xf', 'm(', 'm)', '\\o/', '/o\\', ':D', ':3', '<3')]
+        text = [w for w in text if w.lower() not in ('xd', 'xf', 'm(', 'm)', '\\o/', '/o\\', ':D', ':3', '<3',
+                                                     'o.o', 'o_o')]
         text = ' '.join(text)
 
         try:
