@@ -5,19 +5,13 @@ import pyphen
 
 
 overrides_de = {
-    'einen': 'ei-nen',
-    'naiv': 'na-iv',
-    'video': 'vi-de-o',
-    'videos': 'vi-de-os',
     'idee': 'i-dee',
-    'warum': 'wa-rum',
-    'über': 'ü-ber',
-    'foodporn': 'food-porn',
 }
-for c in string.ascii_lowercase:
+for c in string.ascii_lowercase+'öäüß':
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
 
-join_syllables_de = ('ti-on', 'ti-ons')
+join_syllables_de = ('ti-on', 'ti-ons', 'nai-v')
+split_syllables_de = ('ei-nen', 'na-iv', 'de-o', 'de-os', 'pi-a', 'wa-rum', 'ü-ber', 'food-porn', 'en-tro')
 
 
 def german_number_syllables(number):
@@ -49,7 +43,8 @@ def german_number_syllables(number):
 class Haikufy:
     def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-/',
                  forbidden_oneletter_syllables='bcdfghjjklmnpqrstvwxyz', overrides=overrides_de,
-                 number_syllables=german_number_syllables, join_syllables=join_syllables_de):
+                 number_syllables=german_number_syllables, join_syllables=join_syllables_de,
+                 split_syllables=split_syllables_de):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
         self.letters = letters
         self.ignore_chars = ignore_chars
@@ -58,6 +53,7 @@ class Haikufy:
         self.overrides = overrides
         self.number_syllables = number_syllables
         self.join_syllables = join_syllables
+        self.split_syllables = split_syllables
 
     def haikufy(self, text: str) -> typing.Optional[str]:
         if not text:
@@ -120,6 +116,8 @@ class Haikufy:
         inserted = '-'+self.dic.inserted(w)+'-'
         for join_syllables in self.join_syllables:
             inserted = inserted.replace('-'+join_syllables+'-', '-'+join_syllables.replace('-', '')+'-')
+        for split_syllables in self.split_syllables:
+            inserted = inserted.replace('-'+split_syllables.replace('-', '')+'-', '-'+split_syllables+'-')
         return max(len(tuple(s for s in inserted.split('-') if self._allowed_syllable(s))), 1)
 
 
