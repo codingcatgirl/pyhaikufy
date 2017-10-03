@@ -17,6 +17,30 @@ for c in string.ascii_lowercase+'öäüß':
 
 join_syllables_de = ('ti-on', 'ti-ons', 'nai-v', 'ge-ht')
 split_syllables_de = ('na-iv', 'de-o', 'de-os', 'pi-a', 'o-dy')
+no_syllable_start_de = ('bb', 'bc', 'bd', 'bp', 'cm', 'cn', 'cv', 'cw', 'cx',
+                        'db', 'dc', 'df', 'dg', 'dh', 'dj', 'dk', 'dl', 'dm', 'dn', 'dp', 'dq', 'dz',
+                        'gb', 'gc', 'gd', 'gf', 'gj', 'gk', 'gq'
+                        'kg', 'kq',
+                        'lr', 'lv',
+                        'ml',
+                        'nl'
+                        'pb', 'pm', 'pn',
+                        'qb', 'qc', 'qd', 'qf', 'qg', 'qh', 'qj', 'qk', 'ql', 'qm', 'qn', 'qp', 'qr',
+                        'qs', 'qt', 'qv', 'qw', 'qx', 'qy', 'qz'
+                        'tb', 'td', 'tf', 'tg', 'tn', 'tm',
+                        'xg', 'xk', )
+no_syllable_end_de = ('bm', 'bn', 'bp', 'cm', 'cn', 'cv', 'cw', 'cx',
+                      'db', 'dc', 'df', 'dg', 'dh', 'dj', 'dk', 'dl', 'dm', 'dn', 'dp', 'dq', 'dz',
+                      'gb', 'gc', 'gd', 'gf', 'gj', 'gk', 'gq'
+                      'kg', 'kq',
+                      'lr',
+                      'ml',
+                      'nl'
+                      'pb', 'pm', 'pn',
+                      'qb', 'qc', 'qd', 'qf', 'qg', 'qh', 'qj', 'qk', 'ql', 'qm', 'qn', 'qp', 'qr',
+                      'qs', 'qt', 'qv', 'qw', 'qx', 'qy', 'qz'
+                      'tb', 'td', 'tf', 'tg', 'tn', 'tm',
+                      'xg', 'xk', )
 
 
 def german_number_syllables(number):
@@ -47,10 +71,11 @@ def german_number_syllables(number):
 
 class Haikufy:
     def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-/_',
-                 consonants='bcdfghjjklmnpqrstvwxyzß', overrides=overrides_de,
+                 consonants='bcdfghjklmnpqrstvwxyzß', overrides=overrides_de,
                  number_syllables=german_number_syllables, join_syllables=join_syllables_de,
                  split_syllables=split_syllables_de, vocals='aeiouäöü',
-                 abbr_pattern=r'^[bcdfghjjklmnpqrstvwxzß]+$'):
+                 abbr_pattern=r'^[bcdfghjklmnpqrstvwxzß]+$',
+                 no_syllable_start=no_syllable_start_de, no_syllable_end=no_syllable_end_de):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
         self.letters = letters
         self.ignore_chars = ignore_chars
@@ -62,6 +87,8 @@ class Haikufy:
         self.split_syllables = split_syllables
         self.vocals = vocals
         self.abbr_pattern = abbr_pattern
+        self.no_syllable_start = no_syllable_start
+        self.no_syllable_end = no_syllable_end
 
     def haikufy(self, text: str) -> typing.Optional[str]:
         if not text:
@@ -132,6 +159,10 @@ class Haikufy:
             inserted = new
         inserted = re.sub(r'^-(['+self.consonants+'])-([^-])', r'-\1\2', inserted)
         inserted = re.sub(r'-(['+self.consonants+'])-', r'\1-', inserted)
+        for no_syllable_start in self.no_syllable_start:
+            inserted = re.sub(r'-'+no_syllable_start+'([^-])', r'-'+'-'.join(no_syllable_start)+r'\1', inserted)
+        for no_syllable_end in self.no_syllable_end:
+            inserted = re.sub(r'-'+no_syllable_end+'([^-])', r'-'+'-'.join(no_syllable_end)+r'\1', inserted)
         for join_syllables in self.join_syllables:
             inserted = inserted.replace('-'+join_syllables+'-', '-'+join_syllables.replace('-', '')+'-')
         for split_syllables in self.split_syllables:
