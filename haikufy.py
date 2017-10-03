@@ -19,7 +19,7 @@ overrides_de = {
 for c in string.ascii_lowercase+'öäüß':
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
 
-join_syllables_de = ('ti-on', 'ti-ons', 'si-on', 'si-ons', 'nai-v', 'ge-ht', 'ed-ge', 'kin-ky')
+join_syllables_de = ('ti-on', 'ti-ons', 'si-on', 'si-ons', 'nai-v', 'ge-ht', 'ed-ge', 'kin-ky', 'zi-ell', 'zi-el')
 split_syllables_de = ('na-iv', 'de-o', 'de-os', 'pi-a', 'o-dy')
 no_syllable_start_de = ('bb', 'bc', 'bd', 'bp', 'cm', 'cn', 'cv', 'cw', 'cx',
                         'db', 'dc', 'df', 'dg', 'dh', 'dj', 'dk', 'dl', 'dm', 'dn', 'dp', 'dq', 'dz',
