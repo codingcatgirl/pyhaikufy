@@ -46,10 +46,11 @@ def german_number_syllables(number):
 
 
 class Haikufy:
-    def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-/',
+    def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-/_',
                  consonants='bcdfghjjklmnpqrstvwxyzß', overrides=overrides_de,
                  number_syllables=german_number_syllables, join_syllables=join_syllables_de,
-                 split_syllables=split_syllables_de, vocals='aeiouäöü'):
+                 split_syllables=split_syllables_de, vocals='aeiouäöü',
+                 abbr_pattern=r'^[bcdfghjjklmnpqrstvwxzß]+$'):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
         self.letters = letters
         self.ignore_chars = ignore_chars
@@ -60,6 +61,7 @@ class Haikufy:
         self.join_syllables = join_syllables
         self.split_syllables = split_syllables
         self.vocals = vocals
+        self.abbr_pattern = abbr_pattern
 
     def haikufy(self, text: str) -> typing.Optional[str]:
         if not text:
@@ -94,6 +96,11 @@ class Haikufy:
 
         if word.isdigit() and self.number_syllables is not None:
             return self.number_syllables(int(word))
+
+        if re.match(self.abbr_pattern, word.lower()):
+            if not (word.isupper() or word.islower()):
+                return None
+            word = '-'.join(word)
 
         for char in self.split_chars:
             word = word.replace(char, ' ')
