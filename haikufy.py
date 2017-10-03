@@ -6,12 +6,17 @@ import pyphen
 
 overrides_de = {
     'idee': 'i-dee',
+    'software': 'soft-ware',
+    'hardware': 'hard-ware',
+    'update': 'up-date',
+    'upgrade': 'up-grade',
 }
 for c in string.ascii_lowercase+'öäüß':
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
 
 join_syllables_de = ('ti-on', 'ti-ons', 'nai-v')
-split_syllables_de = ('ei-nen', 'na-iv', 'de-o', 'de-os', 'pi-a', 'wa-rum', 'ü-ber', 'food-porn', 'en-tro')
+split_syllables_de = ('ei-nen', 'na-iv', 'de-o', 'de-os', 'pi-a', 'wa-rum', 'ü-ber', 'food-porn', 'en-tro',
+                      'o-dy')
 
 
 def german_number_syllables(number):
