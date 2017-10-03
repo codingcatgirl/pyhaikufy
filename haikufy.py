@@ -1,3 +1,4 @@
+import re
 import string
 import typing
 
@@ -47,18 +48,19 @@ def german_number_syllables(number):
 
 class Haikufy:
     def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'", split_chars='-/',
-                 forbidden_oneletter_syllables='bcdfghjjklmnpqrstvwxyz', overrides=overrides_de,
+                 consonants='bcdfghjjklmnpqrstvwxyzß', overrides=overrides_de,
                  number_syllables=german_number_syllables, join_syllables=join_syllables_de,
-                 split_syllables=split_syllables_de):
+                 split_syllables=split_syllables_de, vocals='aeiouäöü'):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
         self.letters = letters
         self.ignore_chars = ignore_chars
         self.split_chars = split_chars
-        self.forbidden_oneletter_syllables = forbidden_oneletter_syllables
+        self.consonants = consonants
         self.overrides = overrides
         self.number_syllables = number_syllables
         self.join_syllables = join_syllables
         self.split_syllables = split_syllables
+        self.vocals = vocals
 
     def haikufy(self, text: str) -> typing.Optional[str]:
         if not text:
@@ -82,9 +84,6 @@ class Haikufy:
             lines.append(' '.join(line))
 
         return '\n'.join(lines)
-
-    def _allowed_syllable(self, s):
-        return len(s) > 1 or s.lower() not in self.forbidden_oneletter_syllables
 
     def count_syllables(self, word: str) -> typing.Optional[int]:
         while word and word[0] not in self.letters+string.digits:
@@ -118,12 +117,21 @@ class Haikufy:
         if inserted is not None:
             return len(inserted.split('-'))
 
-        inserted = '-'+self.dic.inserted(w)+'-'
+        inserted = '-'+self.dic.inserted(w.lower())+'-'
+        while True:
+            new = re.sub(r'(['+self.vocals+']+)(['+self.consonants+']?)(['+self.consonants+']+)(['+self.vocals+']+)',
+                         r'\1\2-\3\4', inserted)
+            if new == inserted:
+                break
+            inserted = new
+        inserted = re.sub(r'^-(['+self.consonants+'])-([^-])', r'-\1\2', inserted)
+        inserted = re.sub(r'-(['+self.consonants+'])-', r'\1-', inserted)
         for join_syllables in self.join_syllables:
             inserted = inserted.replace('-'+join_syllables+'-', '-'+join_syllables.replace('-', '')+'-')
         for split_syllables in self.split_syllables:
             inserted = inserted.replace('-'+split_syllables.replace('-', '')+'-', '-'+split_syllables+'-')
-        return max(len(tuple(s for s in inserted.split('-') if self._allowed_syllable(s))), 1)
+        print(inserted)
+        return max(len(inserted.split('-')), 1)
 
 
 if __name__ == '__main__':
