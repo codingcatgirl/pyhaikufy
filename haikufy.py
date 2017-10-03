@@ -159,6 +159,9 @@ class Haikufy:
             inserted = new
         inserted = re.sub(r'^-(['+self.consonants+'])-([^-])', r'-\1\2', inserted)
         inserted = re.sub(r'-(['+self.consonants+'])-', r'\1-', inserted)
+        for vocal in self.vocals:
+            inserted = re.sub(r'^-'+vocal+r'(-'+vocal+r')+', '-'+vocal+vocal, inserted)
+            inserted = re.sub(vocal+r'(-'+vocal+r')+-$', vocal+vocal+'-', inserted)
         for no_syllable_start in self.no_syllable_start:
             inserted = re.sub(r'-'+no_syllable_start+'([^-])', r'-'+'-'.join(no_syllable_start)+r'\1', inserted)
         for no_syllable_end in self.no_syllable_end:
