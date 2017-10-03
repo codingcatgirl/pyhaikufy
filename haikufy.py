@@ -15,7 +15,7 @@ overrides_de = {
 for c in string.ascii_lowercase+'öäüß':
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
 
-join_syllables_de = ('ti-on', 'ti-ons', 'nai-v')
+join_syllables_de = ('ti-on', 'ti-ons', 'nai-v', 'ge-ht')
 split_syllables_de = ('ei-nen', 'na-iv', 'de-o', 'de-os', 'pi-a', 'wa-rum', 'ü-ber', 'food-porn', 'en-tro',
                       'o-dy')
 
