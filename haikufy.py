@@ -129,7 +129,6 @@ class Haikufy:
             inserted = inserted.replace('-'+join_syllables+'-', '-'+join_syllables.replace('-', '')+'-')
         for split_syllables in self.split_syllables:
             inserted = inserted.replace('-'+split_syllables.replace('-', '')+'-', '-'+split_syllables+'-')
-        print(inserted)
         return max(len(inserted[1:-1].split('-')), 1)
 
 
