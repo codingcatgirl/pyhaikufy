@@ -13,6 +13,8 @@ overrides_de = {
     'upgrade': 'up-grade',
     'facebook': 'face-book',
     'interface': 'in-ter-face',
+    'online': 'on-line',
+    'offline': 'off-line',
 }
 for c in string.ascii_lowercase+'öäüß':
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
