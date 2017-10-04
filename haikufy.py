@@ -49,6 +49,7 @@ no_syllable_end_de = ('bm', 'bn', 'bp', 'cm', 'cn', 'cv', 'cw', 'cx',
                       'qs', 'qt', 'qv', 'qw', 'qx', 'qy', 'qz'
                       'tb', 'td', 'tf', 'tg', 'tn', 'tm',
                       'xg', 'xk', )
+emoticons = ('xd', 'xf', 'm(', 'm)', '\\o/', '/o\\', ':D', ':3', '<3', 'o.o', 'o_o')
 
 
 def german_number_syllables(number):
@@ -82,7 +83,7 @@ class Haikufy:
                  consonants='bcdfghjklmnpqrstvwxyzß', overrides=overrides_de,
                  number_syllables=german_number_syllables, join_syllables=join_syllables_de,
                  split_syllables=split_syllables_de, vocals='aeiouäöü',
-                 abbr_pattern=r'^[bcdfghjklmnpqrstvwxzß]+$',
+                 abbr_pattern=r'^[bcdfghjklmnpqrstvwxzß]+$', emoticons=emoticons,
                  no_syllable_start=no_syllable_start_de, no_syllable_end=no_syllable_end_de):
         self.dic = pyphen.Pyphen(lang=lang, left=1, right=1)
         self.letters = letters
@@ -95,6 +96,7 @@ class Haikufy:
         self.split_syllables = split_syllables
         self.vocals = vocals
         self.abbr_pattern = abbr_pattern
+        self.emoticons = emoticons
         self.no_syllable_start = no_syllable_start
         self.no_syllable_end = no_syllable_end
 
@@ -122,6 +124,8 @@ class Haikufy:
         return '\n'.join(lines)
 
     def count_syllables(self, word: str) -> typing.Optional[int]:
+        if word.lower() in self.emoticons:
+            return 0
         while word and word[0] not in self.letters+string.digits:
             word = word[1:]
         while word and word[-1] not in self.letters+string.digits:
