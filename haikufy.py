@@ -171,7 +171,6 @@ class Haikufy:
             inserted = new
         inserted = re.sub(r'^-(['+self.consonants+'])-([^-])', r'-\1\2', inserted)
         inserted = re.sub(r'-(['+self.consonants+'])-', r'\1-', inserted)
-        print(inserted)
         for vocal in self.vocals:
             inserted = re.sub(r'^-'+vocal+r'(-'+vocal+r')+', '-'+vocal+vocal, inserted)
             inserted = re.sub(vocal+r'(-'+vocal+r')+-$', vocal+vocal+'-', inserted)
