@@ -1,3 +1,4 @@
+import html
 import json
 import time
 import traceback
@@ -45,6 +46,7 @@ class StreamListener(tweepy.StreamListener):
             return
 
         text = data.get('extended_tweet', {}).get('full_text', data.get('text', ''))
+        text = html.unescape(text)
         user_name = data.get('user', {}).get('name', '')
         screen_name = data.get('user', {}).get('screen_name', '')
         status_id = data.get('id_str', None)
