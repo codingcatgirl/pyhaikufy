@@ -29,10 +29,16 @@ overrides_de = {
     'ipv4': 'i-p-v-4',
     'ipv6': 'i-p-v-6',
     'yeah': 'yeah',
-    'z.b': 'zum-bei-spiel',
 }
 for c in string.ascii_lowercase+'öäüß':
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
+
+replaces_de = {
+    '€': ' Euro ',
+    '$': ' Dollar ',
+    'z.B.': ' zum Beispiel ',
+    'z.b.': ' zum Beispiel ',
+}
 
 join_syllables_de = ('ti-on', 'ti-ons', 'si-on', 'si-ons', 'nai-v', 'ge-ht', 'ed-ge', 'kin-ky', 'zi-ell', 'zi-el')
 split_syllables_de = ('na-iv', 'de-o', 'de-os', 'pi-a', 'o-dy', 'o-nym', 'o-ny', 'pro-xy')
@@ -91,7 +97,7 @@ def german_number_syllables(number):
 
 class Haikufy:
     def __init__(self, lang='de_DE', letters=string.ascii_letters+'äöüÄÖÜßẞ', ignore_chars="'*", split_chars='-/_',
-                 consonants='bcdfghjklmnpqrstvwxyzß', overrides=overrides_de,
+                 consonants='bcdfghjklmnpqrstvwxyzß', replaces=replaces_de, overrides=overrides_de,
                  number_syllables=german_number_syllables, join_syllables=join_syllables_de,
                  split_syllables=split_syllables_de, vocals='aeiouäöü',
                  abbr_pattern=r'^[bcdfghjklmnpqrstvwxzß]+$', emoticons=emoticons,
@@ -101,6 +107,7 @@ class Haikufy:
         self.ignore_chars = ignore_chars
         self.split_chars = split_chars
         self.consonants = consonants
+        self.replaces = replaces
         self.overrides = overrides
         self.number_syllables = number_syllables
         self.join_syllables = join_syllables
@@ -114,6 +121,10 @@ class Haikufy:
     def haikufy(self, text: str) -> typing.Optional[str]:
         if not text:
             return None
+
+        for before, after in self.replaces.items():
+            text = text.replace(before, after)
+
         words, syllables = zip(*((word, self.count_syllables(word)) for word in text.split()))
         print(words, syllables)
         if None in syllables or sum(syllables) != 17:
