@@ -29,6 +29,7 @@ overrides_de = {
     'ipv4': 'i-p-v-4',
     'ipv6': 'i-p-v-6',
     'yeah': 'yeah',
+    'z.b': 'zum-bei-spiel',
 }
 for c in string.ascii_lowercase+'öäüß':
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
