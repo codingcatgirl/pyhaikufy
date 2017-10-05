@@ -32,6 +32,10 @@ overrides_de = {
     'yeah': 'yeah',
     'where': 'whe-re',
     'fullhd': 'full-h-d',
+    'ios': 'i-os',
+    'cdu': 'c-d-u',
+    'csu': 'c-s-u',
+    'afd': 'a-f-d', # others not needed as they are consonants only
 }
 for c in string.ascii_lowercase+'öäüß':
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
