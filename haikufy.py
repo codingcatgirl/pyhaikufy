@@ -24,6 +24,7 @@ overrides_de = {
     'miyuuli': 'mi-yuu-li',
     'stripe': 'stripe',
     'deadname': 'dead-name',
+    'deadnames': 'dead-names',
     'fea-ture': 'fea-ture',
     'fea-tures': 'fea-tures',
     'ipv4': 'i-p-v-4',
