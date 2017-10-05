@@ -21,6 +21,7 @@ overrides_de = {
     'homeoffice': 'home-of-fice',
     'image': 'i-ma-ge',
     '34c3': 'vier-und-drei-ßig-c-drei',
+    'miyuuli': 'mi-yuu-li',
 }
 for c in string.ascii_lowercase+'öäüß':
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
