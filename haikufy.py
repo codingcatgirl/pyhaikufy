@@ -19,12 +19,14 @@ overrides_de = {
     'home': 'home',
     'office': 'of-fice',
     'homeoffice': 'home-of-fice',
+    'image': 'i-ma-ge',
+    '34c3': 'vier-und-drei-ßig-c-drei',
 }
 for c in string.ascii_lowercase+'öäüß':
     overrides_de[c] = 'yp-si-lon' if c == 'y' else c
 
 join_syllables_de = ('ti-on', 'ti-ons', 'si-on', 'si-ons', 'nai-v', 'ge-ht', 'ed-ge', 'kin-ky', 'zi-ell', 'zi-el')
-split_syllables_de = ('na-iv', 'de-o', 'de-os', 'pi-a', 'o-dy')
+split_syllables_de = ('na-iv', 'de-o', 'de-os', 'pi-a', 'o-dy', 'o-nym', 'o-ny')
 no_syllable_start_de = ('bb', 'bc', 'bd', 'bp', 'cm', 'cn', 'cv', 'cw', 'cx',
                         'db', 'dc', 'df', 'dg', 'dh', 'dj', 'dk', 'dl', 'dm', 'dn', 'dp', 'dq', 'dz',
                         'gb', 'gc', 'gd', 'gf', 'gj', 'gk', 'gq'
@@ -145,6 +147,10 @@ class Haikufy:
             word = word.replace(char, ' ')
         for char in self.ignore_chars:
             word = word.replace(char, '')
+
+        inserted = self.overrides.get(word.lower())
+        if inserted is not None:
+            return len(inserted.split('-'))
 
         for char in word:
             if char != ' ' and char not in self.letters:
