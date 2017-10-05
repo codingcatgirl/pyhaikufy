@@ -74,7 +74,7 @@ no_syllable_end_de = ('bm', 'bn', 'bp', 'cm', 'cn', 'cv', 'cw', 'cx',
                       'qs', 'qt', 'qv', 'qw', 'qx', 'qy', 'qz'
                       'tb', 'td', 'tf', 'tg', 'tn', 'tm',
                       'xg', 'xk', )
-emoticons = ('xd', 'xf', 'm(', 'm)', '\\o/', '/o\\', ':D', ':3', '<3', 'o.o', 'o_o')
+emoticons = ('xd', 'xf', 'm(', 'm)', '\\o/', '/o\\', ':D', ':3', '<3', 'o.o', 'o_o', 'q.q', 'q_q')
 
 
 def german_number_syllables(number):
