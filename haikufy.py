@@ -65,6 +65,7 @@ no_syllable_start_de = ('bb', 'bc', 'bd', 'bp', 'cm', 'cn', 'cv', 'cw', 'cx',
                         'xg', 'xk', )
 no_syllable_end_de = ('bm', 'bn', 'bp', 'cm', 'cn', 'cv', 'cw', 'cx',
                       'db', 'dc', 'df', 'dg', 'dh', 'dj', 'dk', 'dl', 'dm', 'dn', 'dp', 'dq', 'dz',
+                      'fm',
                       'gb', 'gc', 'gd', 'gf', 'gj', 'gk', 'gq'
                       'kg', 'kq',
                       'lr',
