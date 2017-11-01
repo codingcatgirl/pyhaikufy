@@ -77,7 +77,7 @@ class StreamListener(tweepy.StreamListener):
             return
 
         print('[StreamListener] This is a haiku, queue reply!')
-        self.dispatcher.tweet(text=' '.join(leading_mentions)+'\n'+haiku, in_reply_to=status_id)
+        self.dispatcher.tweet(text=' '.join(leading_mentions)+' '+haiku, in_reply_to=status_id)
 
 
 class TweetDispatcher:
