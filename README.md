@@ -3,7 +3,7 @@ turn text or tweets into haikus, if applicable
 
 ## how to check on cli
 ```
-pip3 -r requirements.txt
+pip3 install -r requirements.txt
 python3 haikufy.py
 ```
 
