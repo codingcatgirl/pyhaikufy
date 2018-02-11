@@ -52,7 +52,7 @@ replaces_de = {
 join_syllables_de = ('ti-on', 'ti-ons', 'si-on', 'si-ons', 'nai-v', 'ge-ht', 'ed-ge', 'kin-ky', 'zi-ell', 'zi-el',
                      'wi-ngs', 'no-te-book', 'mo-bi-le', 'in-dia')
 split_syllables_de = ('na-iv', 'de-o', 'de-os', 'pi-a', 'o-dy', 'o-nym', 'o-ny', 'pro-xy', 'note-book', 'mo-bile'
-                      'in-di-a', 'bi-o')
+                      'in-di-a', 'bi-o', 'see-ot')
 no_syllable_start_de = ('bb', 'bc', 'bd', 'bp', 'cm', 'cn', 'cv', 'cw', 'cx',
                         'db', 'dc', 'df', 'dg', 'dh', 'dj', 'dk', 'dl', 'dm', 'dn', 'dp', 'dq', 'dz',
                         'gb', 'gc', 'gd', 'gf', 'gj', 'gk', 'gq'
